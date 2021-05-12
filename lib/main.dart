@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final studentProvider = Provider.of<StudentProvider>(context);
-
+    studentProvider.listOfStudent.sort((a,b)=>a.name.toLowerCase().compareTo(b.name.toLowerCase()));
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -57,7 +57,12 @@ class _MyHomePageState extends State<MyHomePage> {
         childAspectRatio: 1,
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
-        children: [StudentWidget(),StudentWidget(),StudentWidget(),StudentWidget(),StudentWidget(),StudentWidget(), AddStudentAvatar() ],
+        children: [
+          ...studentProvider.listOfStudent.map((student) => StudentWidget(
+                student: student,
+              )),
+          AddStudentAvatar()
+        ],
       ),
 
       floatingActionButton: FloatingActionButton(

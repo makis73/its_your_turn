@@ -11,7 +11,7 @@ class AddStudentAvatar extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        showDialog(context: context, builder: (_) => AddStudentPopupWidget());
+        showDialog(context: context, builder: (context) => AddStudentPopupWidget());
       },
       child: CircleAvatar(
         child: Icon(

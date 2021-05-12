@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:its_your_turn/models/student.dart';
 
 class StudentWidget extends StatelessWidget {
+  final Student student;
+
+  StudentWidget({
+    required this.student,
+  });
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -10,7 +17,7 @@ class StudentWidget extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: CircleAvatar(
-            backgroundImage: AssetImage('assets/images/image.png'),
+            backgroundImage: student.image,
             backgroundColor: Theme.of(context).primaryColor,
             radius: screenWidth / 5,
           ),
@@ -21,7 +28,7 @@ class StudentWidget extends StatelessWidget {
             padding: EdgeInsets.all(2),
             child: FittedBox(
                 child: Text(
-              'Θάνος',
+              student.name,
               style: TextStyle(color: Colors.white),
             )),
             decoration: BoxDecoration(
@@ -41,7 +48,7 @@ class StudentWidget extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Text(
-                '10',
+                '0',
                 style:
                     TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),

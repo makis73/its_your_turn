@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.its_your_turn">
    <application
+   		android:requestLegacyExternalStorage="true"
         android:label="its_your_turn"
         android:icon="@mipmap/ic_launcher">
+		
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
