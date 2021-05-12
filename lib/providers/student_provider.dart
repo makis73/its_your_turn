@@ -9,8 +9,9 @@ class StudentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  deleteStudent(int id) {
+  deleteStudent(String id) {
     listOfStudent.removeWhere((element) => element.id == id);
+    print('Deleted student with id: $id');
     notifyListeners();
   }
 }

@@ -37,16 +37,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final studentProvider = Provider.of<StudentProvider>(context);
-    studentProvider.listOfStudent.sort((a,b)=>a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    studentProvider.listOfStudent
+        .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -66,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: (){},
         tooltip: 'Increment',
         child: Icon(Icons.next_plan),
       ), // This trailing comma makes auto-formatting nicer for build methods.

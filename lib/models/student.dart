@@ -1,9 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 
 class Student {
-  int id;
+  String id;
   String name;
   ImageProvider? image;
   int timesSelected;
