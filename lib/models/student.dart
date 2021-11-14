@@ -13,17 +13,14 @@ class Student {
     required this.image,
     this.timesSelected = 0,
   });
-  
+
   void imageConvert() async {
-    var cartoonBoy = await 
-rootBundle.loadString('assests/images/avatar.png');
-var cartoonGirl = await 
-rootBundle.loadString('assests/images/image.png');
-    
+    var cartoonBoy = await rootBundle.loadString('assests/images/avatar.png');
+    var cartoonGirl = await rootBundle.loadString('assests/images/image.png');
+
 //    ByteData bytes = await rootBundle.load('assets/images/logo_splash.png');
 //var buffer = bytes.buffer;
 //var m = base64.encode(Uint8List.view(buffer));
-
   }
 
   Map toJson() => {

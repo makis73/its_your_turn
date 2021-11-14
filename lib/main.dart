@@ -40,8 +40,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late Future<List> _savedListOfStudents;
+  late List<Student>? studentList;
+  late Future<String> stringOfList;
 
 //  Future<List<Student>> loadListOfStudents() async {
 //    var listOfStudent;
@@ -52,52 +52,80 @@ class _MyHomePageState extends State<MyHomePage> {
 //    }
 //    return listOfStudent;
 //  }
+
+  Future<void> fetchListOfStudents(StudentProvider provider) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+    String studentListString = _prefs.getString('students') ?? '';
+    provider.listOfStudent = convertStringToListOfStudents(studentListString);
+    print(provider.listOfStudent);
+  }
+
 //
   @override
   void initState() {
+    final studentProvider =
+        Provider.of<StudentProvider>(context, listen: false);
+    fetchListOfStudents(studentProvider).then((value) {
+      setState(() {
+        
+      });
+    });
+
+    // .then((value) => _fetchedListOfStudentsString = value);
+
     //loadListOfStudents();
 
-    _savedListOfStudents = _prefs.then((value) {
-      var listOfStudentString = value.getString('students');
-      print(listOfStudentString);
+    // _savedListOfStudents = _prefs.then((value) {
+    //   String? listOfStudentString = value.getString('students');
+    //   print(listOfStudentString);
+    //   return listOfStudentString;
 
-      var listOfStudent = jsonDecode(listOfStudentString!);
-      print(listOfStudent);
-      return listOfStudent;
-    });
+    // List<Student> listOfStudent = jsonDecode(listOfStudentString!);
+    // print('From Init:: listOfStudent: $listOfStudent');
+    // return listOfStudent;
+    // });
     //loadListOfStudents();
     super.initState();
+  }
+
+  List<Student> convertStringToListOfStudents(String data) {
+    String fetchedString = data;
+    List<dynamic> fetchedList = jsonDecode(fetchedString);
+    // print('From Build:: fetchedList: $fetchedList)');
+    List<Student> listOfStudent =
+        fetchedList.map((e) => Student.fromJson(e)).toList();
+    return listOfStudent;
   }
 
   @override
   Widget build(BuildContext context) {
     final studentProvider = Provider.of<StudentProvider>(context);
-    print(studentProvider.listOfStudent);
-    studentProvider.listOfStudent
-        .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    List<Student> listOfStudents = studentProvider.listOfStudent;
+    print('From build:: $listOfStudents');
+    // print(studentProvider.listOfStudent);
+    // studentProvider.listOfStudent
+    //     .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: FutureBuilder<Object>(
-          future: _savedListOfStudents,
-          builder: (context,AsyncSnapshot snapshot) {
-            print('From Build${snapshot.data}');
-            var listOfStudents = snapshot.data;
-            return GridView.count(
-              padding: EdgeInsets.all(18),
-              crossAxisCount: 4,
-              childAspectRatio: 1,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-              children: [
-                ...listOfStudents.map((student) => StudentWidget(
-                      student: student,
-                    )),
-                AddStudentAvatar()
-              ],
-            );
-          }),
+      body: GridView.count(
+        padding: EdgeInsets.all(18),
+        crossAxisCount: 4,
+        childAspectRatio: 1,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
+        children: [
+          if (listOfStudents != null)
+            ...listOfStudents.map((student) => StudentWidget(
+                  student: student,
+                )),
+          AddStudentAvatar()
+        ],
+      ),
+
+      // print(listOfStudent);
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
