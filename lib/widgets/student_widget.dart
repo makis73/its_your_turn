@@ -76,7 +76,7 @@ class StudentWidget extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: CircleAvatar(
-              backgroundImage: student.image,
+              backgroundImage: AssetImage(student.image),
               backgroundColor: Colors.white,
               radius: screenWidth / 5,
             ),

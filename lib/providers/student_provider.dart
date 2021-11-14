@@ -12,8 +12,10 @@ class StudentProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     listOfStudent.add(newStudent);
-    String jsonOfStudents = json.encode(listOfStudent);
+    String jsonOfStudents =
+        json.encode(listOfStudent.map((e) => e.toJson()).toList());
     print(jsonOfStudents);
+    prefs.setString('students', jsonOfStudents);
 
     notifyListeners();
   }
@@ -31,8 +33,12 @@ class StudentProvider extends ChangeNotifier {
     listOfStudent.removeAt(randomStudent);
   }
 
-  loadListOfStudents() async {
+  Future<List<Student>> loadListOfStudents() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    
+    var listOfStudentString = prefs.getString('students');
+    if (listOfStudentString != null) {
+      listOfStudent = jsonDecode(listOfStudentString)['students'];
+    }
+    return listOfStudent;
   }
 }

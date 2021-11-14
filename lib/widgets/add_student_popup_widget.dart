@@ -55,9 +55,7 @@ class _AddStudentPopupWidgetState extends State<AddStudentPopupWidget> {
       Student newStudent = Student(
         name: nameController.text,
         id: _id,
-        image: (_image != null)
-            ? FileImage(_image)
-            : Image.asset('assets/images/image.png').image,
+        image: 'assets/images/image.png',
       );
       studentProvider.addStudent(newStudent);
       _image = null;
